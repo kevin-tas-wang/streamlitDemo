@@ -76,7 +76,7 @@ st.sidebar.write(f'##### using test sample size: {rawX_test.shape}')
 
 # load Dimensionality reduction
 if dimentionMethod!="None":
-    st.write(fittedMethodFileName)
+    # st.write(fittedMethodFileName)
     filePath= f'./artifacts/{fittedMethodFileName}'
     fittedMethod = joblib.load(filePath)
     X_test=fittedMethod.transform(rawX_test.copy())
