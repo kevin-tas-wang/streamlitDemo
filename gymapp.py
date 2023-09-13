@@ -88,8 +88,7 @@ st.write(f'##### using test sample size: {X_test.shape}')
 
 # load ml models
 st.write(f'loading {tmpModelFileName} ')
-# filePath= f'./artifacts/{tmpModelFileName}'
-filePath= f'./artifacts/ADASYN Oversampling-None-Random Forest-ml.joblib'
+filePath= f'./artifacts/{tmpModelFileName}'
 tmpModel = joblib.load(filePath)
 st.write(tmpModel)
 
