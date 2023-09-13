@@ -24,7 +24,7 @@ st.set_page_config(layout="wide", page_title="Gym Injurey Prediction Testing")
 
 st.write("### Gym Injurey Prediction")
 st.write(
-    ":dog: This demo uses built-in testing data; in future it will allower users to upload some test data to explore different models/settings in prediction"
+    ":dog: This demo uses built-in testing data; in future it will allow users to upload some test data to explore different models/settings in prediction"
 )
 
 
