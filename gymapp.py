@@ -92,9 +92,13 @@ filePath= f'./artifacts/{tmpModelFileName}'
 tmpModel = joblib.load(filePath)
 st.write(tmpModel)
 
-# tmpPredicts = tmpModel.predict(X_test)
-# tmpCmresults = confusion_matrix(y_test, tmpPredicts)
-# tmpreport = classification_report(y_test, tmpPredicts)
+tmpPredicts = tmpModel.predict(X_test)
+tmpCmresults = confusion_matrix(y_test, tmpPredicts)
+tmpreport = classification_report(y_test, tmpPredicts)
 
 # st.write(f'Confusion Matrix:\n{tmpCmresults}\n')
-# st.write(f'Classification Report: \n{tmpreport}')
+st.write(f'Classification Report: \n{tmpreport}\n')
+
+fig = plt.figure(figsize=(10, 4))
+sns.heatmap(tmpCmresults, annot=True, fmt='d', linecolor='black', cmap="Greens")
+st.pyplot(fig)
