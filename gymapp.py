@@ -1,4 +1,22 @@
 import streamlit as st
+import pandas as pd 
+from pandas import Interval
+from pandas.plotting import scatter_matrix
+
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+
+from sklearn.preprocessing import LabelEncoder, OrdinalEncoder, OneHotEncoder, StandardScaler,RobustScaler
+from sklearn.metrics import confusion_matrix, classification_report
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import StackingClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import RidgeClassifier
+from sklearn.svm import SVC 
+from xgboost import XGBClassifier
 
 st.set_page_config(layout="wide", page_title="Gym Injurey Prediction Testing")
 
@@ -19,4 +37,6 @@ if my_upload is not None:
     else:
         st.write("You have uploaded successfully!")
 else:
-    st.write("Try uploading something :grin:")
+    # st.write("Try uploading something :grin:")
+    st.write("No file uploaded.")
+    
