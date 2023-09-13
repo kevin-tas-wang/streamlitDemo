@@ -99,6 +99,6 @@ tmpreport = classification_report(y_test, tmpPredicts)
 # st.write(f'Confusion Matrix:\n{tmpCmresults}\n')
 st.write(f'Classification Report: \n{tmpreport}\n')
 
-fig = plt.figure(figsize=(10, 4))
+fig = plt.figure(figsize=(5, 2))
 sns.heatmap(tmpCmresults, annot=True, fmt='d', linecolor='black', cmap="Greens")
 st.pyplot(fig)
