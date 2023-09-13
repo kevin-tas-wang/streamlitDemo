@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
+import joblib
+
 from sklearn.preprocessing import LabelEncoder, OrdinalEncoder, OneHotEncoder, StandardScaler,RobustScaler
 from sklearn.metrics import confusion_matrix, classification_report
 
@@ -20,23 +22,80 @@ from xgboost import XGBClassifier
 
 st.set_page_config(layout="wide", page_title="Gym Injurey Prediction Testing")
 
-st.write("### Find the right model for Gym Injurey Prediction")
+st.write("### Gym Injurey Prediction")
 st.write(
-    ":dog: Try uploading some test data to explore different models/settings in prediction"
+    ":dog: This demo uses built-in testing data; in future it will allower users to upload some test data to explore different models/settings in prediction"
 )
-st.sidebar.write("## Upload a sample data")
+
 
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 
 col1, col2 = st.columns(2)
-my_upload = st.sidebar.file_uploader("Upload a sample file", type=["csv"])
+my_upload = st.sidebar.file_uploader("## Upload a sample data", type=["csv"], disabled=True)
 
-if my_upload is not None:
-    if my_upload.size > MAX_FILE_SIZE:
-        st.error("The uploaded file is too large. Please upload a file smaller than 5MB.")
-    else:
-        st.write("You have uploaded successfully!")
+# if my_upload is not None:
+#     if my_upload.size > MAX_FILE_SIZE:
+#         st.error("The uploaded file is too large. Please upload a file smaller than 5MB.")
+#     else:
+#         st.write("You have uploaded successfully!")
+# else:
+#     # st.write("Try uploading something :grin:")
+#     st.write("No file uploaded.")
+
+# sidebar
+resamplingMethod = st.sidebar.radio(
+    "**Under/Over Sampling Method:**",
+    ["None", "Random UnderSampling", "Randown Oversampling", "ADASYN Oversampling", "SMOTE Tomek", "SMOTE Enn"],
+    index=0)
+
+
+dimentionMethod = st.sidebar.radio(
+    "**Dimensionality reduction Method:**",
+    ["None", "PCA", "ICA"],  
+    index=0)
+
+mlMethod = st.sidebar.radio(
+    "**ML method:**",
+    ["Logistics Regression","Random Forest", "Decision Tree", "XGBoost", "Stacking"],  
+    index=0)
+
+# get artifact names
+tmpModelFileName = f'{resamplingMethod}-{dimentionMethod}-{mlMethod}-ml.joblib'
+fittedMethodFileName=f'{resamplingMethod}-{dimentionMethod}-dm.joblib'
+
+# st.write(f'Under/OverSampling method: {resamplingMethod}; Dimensionality reduction method: {dimentionMethod}; ML method:{mlMethod}')
+# st.write(tmpModelFileName)
+# st.write(fittedMethodFileName )
+
+# load default testing data
+rawX_test = pd.read_csv('./testingdata/xtest.csv')
+y_testDf = pd.read_csv('./testingdata/ytest.csv')
+y_test =y_testDf.after_claim
+
+st.write(f'##### using test sample size: {rawX_test.shape}')
+
+# load Dimensionality reduction
+if dimentionMethod!="None":
+    st.write(fittedMethodFileName)
+    filePath= f'./artifacts/{fittedMethodFileName}'
+    fittedMethod = joblib.load(filePath)
+    X_test=fittedMethod.transform(rawX_test.copy())
 else:
-    # st.write("Try uploading something :grin:")
-    st.write("No file uploaded.")
-    
+     X_test=rawX_test.copy()
+
+st.write(f'##### using test sample size: {X_test.shape}')
+
+
+# load ml models
+st.write(f'loading {tmpModelFileName} ')
+# filePath= f'./artifacts/{tmpModelFileName}'
+filePath= f'./artifacts/ADASYN Oversampling-None-Random Forest-ml.joblib'
+tmpModel = joblib.load(filePath)
+st.write(tmpModel)
+
+# tmpPredicts = tmpModel.predict(X_test)
+# tmpCmresults = confusion_matrix(y_test, tmpPredicts)
+# tmpreport = classification_report(y_test, tmpPredicts)
+
+# st.write(f'Confusion Matrix:\n{tmpCmresults}\n')
+# st.write(f'Classification Report: \n{tmpreport}')
