@@ -72,7 +72,7 @@ rawX_test = pd.read_csv('./testingdata/xtest.csv')
 y_testDf = pd.read_csv('./testingdata/ytest.csv')
 y_test =y_testDf.after_claim
 
-st.write(f'##### using test sample size: {rawX_test.shape}')
+st.sidebar.write(f'##### using test sample size: {rawX_test.shape}')
 
 # load Dimensionality reduction
 if dimentionMethod!="None":
@@ -83,7 +83,7 @@ if dimentionMethod!="None":
 else:
      X_test=rawX_test.copy()
 
-st.write(f'##### using test sample size: {X_test.shape}')
+# st.sidebar.write(f'##### using test sample size: {X_test.shape}')
 
 
 # load ml models
