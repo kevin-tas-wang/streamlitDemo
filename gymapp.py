@@ -94,10 +94,11 @@ st.write(tmpModel)
 
 tmpPredicts = tmpModel.predict(X_test)
 tmpCmresults = confusion_matrix(y_test, tmpPredicts)
-tmpreport = classification_report(y_test, tmpPredicts)
+tmpreport = classification_report(y_test, tmpPredicts,output_dict=True)
 
-# st.write(f'Confusion Matrix:\n{tmpCmresults}\n')
-st.write(f'Classification Report: \n{tmpreport}\n')
+st.write('**Confusion Matrix:**')
+
+st.dataframe(tmpreport)
 
 fig = plt.figure(figsize=(3, 1))
 sns.heatmap(tmpCmresults, annot=True, fmt='d', linecolor='black', cmap="Greens")
